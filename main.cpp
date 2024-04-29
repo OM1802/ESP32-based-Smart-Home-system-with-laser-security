@@ -29,8 +29,8 @@ float t,h;
 
 
 char auth[] = BLYNK_AUTH_TOKEN; // Your Blynk Auth Token
-char ssid[] = "prnv";
-char pass[] = "pranav123";
+char ssid[] = "om";
+char pass[] = "hello12345";
 
 DHT dht(DHTPIN, DHTTYPE);
 LiquidCrystal_I2C lcd(0x27, 16, 2); // I2C address 0x27, 16 column and 2 rows
@@ -70,7 +70,7 @@ BLYNK_WRITE(V1){
 
 void setup() {
   Serial.begin(9600);
-  lcd.begin();
+  lcd.init();
   lcd.backlight();
   dht.begin();
   Blynk.begin(auth, ssid, pass);
@@ -78,6 +78,7 @@ void setup() {
   digitalWrite(FANPIN, LOW); // Ensure fan is initially turned off
   pinMode(LEDPIN, OUTPUT);   // Set LED pin as output
   pinMode(LASERPIN, INPUT); // Set the laser pin as input
+  pinMode(LDRPIN, INPUT); 
   pinMode(BUZZERPIN, OUTPUT); // Set the buzzer pin as output
 
 
@@ -92,7 +93,7 @@ void setup() {
 
 void loop() {
   Blynk.run();
-  delay(2000);
+  
    h = dht.readHumidity();
    t = dht.readTemperature();
 Blynk.virtualWrite(V2, t);
@@ -111,7 +112,7 @@ Blynk.virtualWrite(V2, t);
   lcd.print("Humidity:");
   lcd.print(h);
   lcd.print("%");
-  delay(3000);
+  delay(2000);
   lcd.clear();
 
   if (t > 25) {
@@ -120,14 +121,13 @@ Blynk.virtualWrite(V2, t);
   }
 
   // Read LDR value
-  int ldrValue = analogRead(LDRPIN);
-  
-  // Map LDR value to LED brightness
-  int brightness = map(ldrValue, 0, 1023, 255, 0);
-  
-  // Set LED brightness
-  Serial.println(brightness);
-  analogWrite(LEDPIN, brightness);
+ int ldrValue = digitalRead(LDRPIN); // Read digital value from LDR module output pin
+  Serial.println(ldrValue); // Print LDR value to serial monitor
+
+  // Convert digital value to LED brightness control
+  int brightness = ldrValue == HIGH ? 255 : 0; // If LDR output is HIGH, set LED brightness to maximum, else turn off LED
+  analogWrite(LEDPIN, brightness); // Set LED brightness
+  delay(25); // Add a short delay for stability
 
  int laserState = digitalRead(LASERPIN); // Read the state of the laser module
 if (laserState == LOW && buzzerState == true) { // If the laser beam is broken and the buzzer is off
