@@ -1,4 +1,4 @@
-This file conatain the details about the program used in this project which is included in the main.cpp file of this repository
+This file conatain the details about the program used in this project which is included in the main.cpp file of this repository(link: https://github.com/OM1802/ESP32-based-Smart-Home-system-with-laser-security/blob/main/main.cpp)
 
 Header Includes:
 Various libraries are included for different functionalities: Wire.h for I2C communication, LiquidCrystal_I2C.h for interfacing with a LCD display, DHT.h for the DHT22 sensor, WiFi.h and WiFiClient.h for WiFi connectivity, and BlynkSimpleEsp32.h for interfacing with the Blynk IoT platform.
