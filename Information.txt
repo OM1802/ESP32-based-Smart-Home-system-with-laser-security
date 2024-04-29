@@ -1,0 +1,37 @@
+This file conatain the details about the program used in this project which is included in the main.cpp file of this repository
+
+Header Includes:
+Various libraries are included for different functionalities: Wire.h for I2C communication, LiquidCrystal_I2C.h for interfacing with a LCD display, DHT.h for the DHT22 sensor, WiFi.h and WiFiClient.h for WiFi connectivity, and BlynkSimpleEsp32.h for interfacing with the Blynk IoT platform.
+Definitions and Constants:
+#define statements define pins, sensor types, and Blynk parameters.
+Constants like DHTPIN, DHTTYPE, FANPIN, LDRPIN, LEDPIN, LASERPIN, BUZZERPIN, and others specify the GPIO pins used for various components.
+Global Variables:
+Variables to hold sensor readings (t for temperature, h for humidity), Blynk authentication token (auth), WiFi credentials (ssid and pass), and a flag to store the state of the buzzer (buzzerState).
+
+Blynk Virtual Functions:
+BLYNK_WRITE functions are used to handle data sent from the Blynk app.
+BUZZER_CONTROL function updates the buzzerState based on the value received from the app.
+V0 function controls the fan based on the value received from the app.
+V1 and V2 functions send humidity and temperature data to the Blynk app, respectively.
+
+Setup Function:
+Initializes serial communication, LCD display, DHT sensor, and Blynk connection.
+Sets pin modes for various components.
+Connects to WiFi and prints a message when connected.
+
+Loop Function:
+Blynk.run() is called to handle Blynk-related tasks.
+Sensor readings for temperature and humidity are obtained from the DHT sensor.
+If the readings are valid, they are displayed on the LCD.
+LED brightness is adjusted based on the LDR value.
+The code checks the state of the laser module:
+If the laser beam is broken and the buzzer is off, the buzzer beeps to indicate an intruder alert.
+If the buzzer is turned off from the Blynk app, the buzzer is turned off.
+
+
+Overall, this code enables remote monitoring and control of sensors and actuators through the Blynk app, allowing users to monitor temperature, humidity, 
+and security status, and control devices like a fan and a buzzer.
+
+
+
+
